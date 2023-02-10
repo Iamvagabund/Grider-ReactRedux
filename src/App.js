@@ -1,28 +1,23 @@
-import './App.css';
-import { useState } from 'react';
-import AnimalShow from './AnimalShow';
+import { useState } from "react";
+import searchImages from "./api";
+import ImageList from "./components/ImageList";
+import SearchBar from "./components/SearchBar";
 
-function getRandomAnimal() {
-  const animals = ['bird', 'cat', 'cow', 'dog', 'gator', 'horse'];
-
-  return animals[Math.floor(Math.random() * animals.length)]
-}
 
 function App() {
-  const [animals, setAnimals] = useState([])
+  const [images, setImages] = useState([])
 
-  const handleClick = (event) => {
-    setAnimals([...animals, getRandomAnimal()])
+  const handleSubmit = async (term) => {
+    console.log('Do a search with', term)
+    const result = await searchImages(term);
+    console.log(result);
+    setImages(result)
   }
 
-  const renderedAnimals = animals.map((animal, index) => {
-    return <AnimalShow type={animal} key={index} />
-  });
-
   return (
-    <div className='app'>
-      <button onClick={handleClick}>Add animal</button>
-      <div className='animals-list'>{renderedAnimals}</div>
+    <div>
+      <SearchBar onSubmit={handleSubmit}/>
+      <ImageList images={images}/>
     </div>
   );
 }
