@@ -1,25 +1,45 @@
-import { useState } from "react";
-import searchImages from "./api";
-import ImageList from "./components/ImageList";
-import SearchBar from "./components/SearchBar";
 
+import { useState } from 'react';
+import BookCreate from './components/BookCreate';
+import BookList from './components/BookList';
 
 function App() {
-  const [images, setImages] = useState([])
+  const [books, setBooks] = useState([]);
 
-  const handleSubmit = async (term) => {
-    console.log('Do a search with', term)
-    const result = await searchImages(term);
-    console.log(result);
-    setImages(result)
+  const editBookById = (id, newTitle) => {
+    const updatedBooks = books.map((book) => {
+      if(book.id === id) {
+        return {...book, title: newTitle}
+      }
+
+      return book
+    })
+
+    setBooks(updatedBooks)
+  }
+
+  const deleteBookById = (id) => {
+    const updatedBooks = books.filter((book) => book.id!== id);
+    setBooks(updatedBooks)
+  }
+
+  const createBook = (title) => {
+    console.log('Need to add book with title ' + title);
+    const updatedBooks = [
+      ...books,
+      {id: Math.round(Math.random() * 9999), title}
+    ]
+
+    setBooks(updatedBooks)
   }
 
   return (
-    <div>
-      <SearchBar onSubmit={handleSubmit}/>
-      <ImageList images={images}/>
+    <div className="app">
+      <h1>Reading List</h1>
+      <BookList onEdit={editBookById} books={books} onDelete={deleteBookById}/>
+      <BookCreate onCreate={createBook} />
     </div>
   );
 }
 
-export default App;
+export default App; 
