@@ -1,4 +1,4 @@
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 const Button = ({
   children,
@@ -15,19 +15,19 @@ const Button = ({
   )
 }
 
-// Button.propTypes = {
-//   checkVariationValue: ({primary, secondary, success, warning, danger}) => {
-//     const count = Number(!!primary) 
-//     + Number(!!secondary) 
-//     + Number(!!warning)
-//     + Number(!!success)
-//     + Number(!!danger)
+Button.propTypes = {
+  checkVariationValue: ({primary, secondary, success, warning, danger}) => {
+    const count = Number(!!primary) 
+    + Number(!!secondary) 
+    + Number(!!warning)
+    + Number(!!success)
+    + Number(!!danger)
 
-//     if (count > 1) {
-//       return new Error('Only one of props can be true')
-//     }
-//   }
-// }
+    if (count > 1) {
+      return new Error('Only one of props can be true')
+    }
+  }
+}
 
 export default Button
 
